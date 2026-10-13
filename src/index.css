@@ -1,0 +1,142 @@
+@import 'tailwindcss';
+
+/* ไม่ต้องสแกนโฟลเดอร์ .claude (ไฟล์ของ skill) หา class ไม่งั้นไฟล์ CSS จะมี class ที่ไม่ได้ใช้ปนมาเยอะ */
+@source not '../.claude';
+
+/*
+  Design tokens (สีทั้งหมดของแอปอยู่ที่นี่ที่เดียว)
+  - component ห้ามใช้ค่าสี hex ตรงๆ ให้ใช้ class จาก token เช่น bg-primary, text-muted-foreground
+  - โหมดมืดแค่เปลี่ยนค่าตัวแปรด้านล่าง component ไม่ต้องเขียน dark: เพิ่ม
+  - คู่สีตัวอักษร/พื้นหลังผ่านเกณฑ์ contrast 4.5:1 (ขอบช่องกรอก/checkbox ผ่าน 3:1) ทั้งโหมดสว่างและโหมดมืด
+*/
+:root {
+  color-scheme: light dark;
+
+  /* โทนขาว-ดำมินิมอล: ใช้ "ดำนวล" (#171717) แทนดำสนิท (#000) และเทาหลายระดับ จะได้ไม่แสบตา
+     สีแดงใช้เฉพาะการลบ/ข้อผิดพลาด เพราะต้องเตือนผู้ใช้ */
+  --background: #ffffff; /* พื้นหลังหน้าเว็บ */
+  --surface: #ffffff; /* พื้นการ์ด (แยกจากพื้นหลังด้วยเส้นขอบ) */
+  --foreground: #262626; /* ตัวอักษรหลัก */
+  --muted: #f5f5f5; /* พื้นรอง เช่น แถบตัวกรอง, skeleton */
+  --muted-foreground: #666666; /* ตัวอักษรรอง เช่น วันที่, คำอธิบาย */
+  --border: #e5e5e5; /* เส้นขอบตกแต่ง/เส้นคั่น */
+  --control-border: #8a8a8a; /* ขอบช่องกรอกและ checkbox (contrast >= 3:1) */
+  --primary: #171717; /* สีหลัก: ปุ่มหลัก, checkbox ที่ติ๊กแล้ว, แถบความคืบหน้า */
+  --on-primary: #ffffff; /* ตัวอักษรบนสีหลัก */
+  --primary-hover: #404040;
+  --primary-soft: #ebebeb; /* พื้นอ่อนของสิ่งที่ถูกเลือก และพื้นตอนชี้ปุ่มไอคอน */
+  --ring: #404040; /* วงแหวน focus */
+  --destructive: #b91c1c; /* ปุ่มลบ (แดงหม่น) */
+  --on-destructive: #ffffff;
+  --destructive-hover: #991b1b; /* ปุ่มลบตอนชี้/กด (เข้มขึ้น ตัวอักษรขาวยังผ่าน 4.5:1) */
+  --destructive-soft: #fef2f2; /* พื้นกล่อง error */
+  --on-destructive-soft: #991b1b; /* ตัวอักษรในกล่อง error */
+}
+
+/* โหมดมืด: พื้นเทาเข้ม (ไม่ใช่ดำสนิท) และสีหลักเป็นขาวนวล (ไม่ใช่การกลับสีตรงๆ) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #121212;
+    --surface: #1a1a1a;
+    --foreground: #ededed;
+    --muted: #262626;
+    --muted-foreground: #a3a3a3;
+    --border: #2e2e2e;
+    --control-border: #737373;
+    --primary: #ededed;
+    --on-primary: #171717; /* พื้นปุ่มสว่าง จึงใช้ตัวอักษรสีเข้ม */
+    --primary-hover: #d4d4d4;
+    --primary-soft: #333333;
+    --ring: #d4d4d4;
+    --destructive: #f87171;
+    --on-destructive: #450a0a;
+    --destructive-hover: #fca5a5;
+    --destructive-soft: #2a1414;
+    --on-destructive-soft: #fecaca;
+  }
+}
+
+/* ปิดชุดสีสำเร็จรูปของ Tailwind (เช่น bg-red-500) เพื่อบังคับให้ใช้ token ของเราเท่านั้น */
+@theme {
+  --color-*: initial;
+  --font-sans: 'IBM Plex Sans Thai', ui-sans-serif, system-ui, sans-serif;
+
+  /* ขนาดตัวอักษร 12/14/16/18/24/32 ภาษาไทยมีวรรณยุกต์ จึงเว้นระยะบรรทัดมากกว่าปกติ */
+  --text-sm--line-height: 1.5;
+  --text-base--line-height: 1.6;
+  --text-lg--line-height: 1.6;
+  --text-3xl: 2rem;
+  --text-3xl--line-height: 1.25;
+}
+
+/* เชื่อม token กับ Tailwind: --color-primary ทำให้ใช้ bg-primary, text-primary, border-primary ฯลฯ ได้ */
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-control-border: var(--control-border);
+  --color-primary: var(--primary);
+  --color-on-primary: var(--on-primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-soft: var(--primary-soft);
+  --color-ring: var(--ring);
+  --color-destructive: var(--destructive);
+  --color-on-destructive: var(--on-destructive);
+  --color-destructive-hover: var(--destructive-hover);
+  --color-destructive-soft: var(--destructive-soft);
+  --color-on-destructive-soft: var(--on-destructive-soft);
+}
+
+/* variant "short:" สำหรับจอเตี้ย เช่น มือถือแนวนอน (สูงไม่เกิน 500px)
+   ใช้ลดระยะห่างและขนาดหัวข้อ เพื่อให้เห็นรายการแรกได้โดยไม่ต้องเลื่อนจอ เช่น short:py-4 */
+@custom-variant short (@media (max-height: 500px));
+
+/* class "focus-ring": วงแหวน focus สำหรับทุกอย่างที่กดได้ (แสดงเมื่อใช้คีย์บอร์ด)
+   outline โปร่งใสยังโผล่ในโหมด High Contrast ของ Windows จึงไม่ได้ลบ outline ทิ้งไปเฉยๆ */
+@utility focus-ring {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+
+  &:focus-visible {
+    @apply ring-2 ring-ring ring-offset-2 ring-offset-surface;
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-background font-sans text-base text-foreground antialiased;
+  }
+
+  /* ทุกอย่างที่กดได้แสดงเคอร์เซอร์รูปมือ ส่วนที่ปิดใช้งานแสดงเคอร์เซอร์ห้าม
+     aria-disabled = ปิดใช้งานชั่วคราวแต่ยังรับโฟกัสได้ (ใช้ระหว่างรอ API เพื่อไม่ให้โฟกัสของคีย์บอร์ดหลุด) */
+  button:not(:disabled, [aria-disabled='true']),
+  input[type='checkbox']:not(:disabled, [aria-disabled='true']) {
+    cursor: pointer;
+  }
+
+  :disabled,
+  [aria-disabled='true'] {
+    cursor: not-allowed;
+  }
+
+  /* ตัดดีเลย์การแตะบนมือถือ (กันการซูมเมื่อแตะสองครั้ง) */
+  button,
+  input[type='checkbox'] {
+    touch-action: manipulation;
+  }
+
+  /* ผู้ใช้ที่ตั้งค่า "ลดการเคลื่อนไหว" ในระบบ: ปิด animation และ transition ทั้งหมด */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
