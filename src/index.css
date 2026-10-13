@@ -6,11 +6,12 @@
 /*
   Design tokens (สีทั้งหมดของแอปอยู่ที่นี่ที่เดียว)
   - component ห้ามใช้ค่าสี hex ตรงๆ ให้ใช้ class จาก token เช่น bg-primary, text-muted-foreground
-  - โหมดมืดแค่เปลี่ยนค่าตัวแปรด้านล่าง component ไม่ต้องเขียน dark: เพิ่ม
+  - เปิดมาเป็นโหมดสว่าง (พื้นขาว) เสมอ โหมดมืดเปิดเองด้วยปุ่มในหัวแอป ซึ่งจะใส่ data-theme="dark" ที่ <html>
+    แล้วเปลี่ยนแค่ค่าตัวแปรด้านล่าง component ไม่ต้องเขียน dark: เพิ่ม
   - คู่สีตัวอักษร/พื้นหลังผ่านเกณฑ์ contrast 4.5:1 (ขอบช่องกรอก/checkbox ผ่าน 3:1) ทั้งโหมดสว่างและโหมดมืด
 */
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
 
   /* โทนขาว-ดำมินิมอล: ใช้ "ดำนวล" (#171717) แทนดำสนิท (#000) และเทาหลายระดับ จะได้ไม่แสบตา
      สีแดงใช้เฉพาะการลบ/ข้อผิดพลาด เพราะต้องเตือนผู้ใช้ */
@@ -31,29 +32,30 @@
   --destructive-hover: #991b1b; /* ปุ่มลบตอนชี้/กด (เข้มขึ้น ตัวอักษรขาวยังผ่าน 4.5:1) */
   --destructive-soft: #fef2f2; /* พื้นกล่อง error */
   --on-destructive-soft: #991b1b; /* ตัวอักษรในกล่อง error */
+  --scrim: #000000; /* พื้นหลังทึบหลังหน้าต่างถามย้ำ (ใช้แบบโปร่งแสง เช่น backdrop:bg-scrim/50) ทั้งสองโหมด */
 }
 
-/* โหมดมืด: พื้นเทาเข้ม (ไม่ใช่ดำสนิท) และสีหลักเป็นขาวนวล (ไม่ใช่การกลับสีตรงๆ) */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #121212;
-    --surface: #1a1a1a;
-    --foreground: #ededed;
-    --muted: #262626;
-    --muted-foreground: #a3a3a3;
-    --border: #2e2e2e;
-    --control-border: #737373;
-    --primary: #ededed;
-    --on-primary: #171717; /* พื้นปุ่มสว่าง จึงใช้ตัวอักษรสีเข้ม */
-    --primary-hover: #d4d4d4;
-    --primary-soft: #333333;
-    --ring: #d4d4d4;
-    --destructive: #f87171;
-    --on-destructive: #450a0a;
-    --destructive-hover: #fca5a5;
-    --destructive-soft: #2a1414;
-    --on-destructive-soft: #fecaca;
-  }
+/* โหมดมืด (เปิดจากปุ่มในหัวแอป): พื้นเทาเข้ม (ไม่ใช่ดำสนิท) และสีหลักเป็นขาวนวล (ไม่ใช่การกลับสีตรงๆ) */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --background: #121212;
+  --surface: #1a1a1a;
+  --foreground: #ededed;
+  --muted: #262626;
+  --muted-foreground: #a3a3a3;
+  --border: #2e2e2e;
+  --control-border: #737373;
+  --primary: #ededed;
+  --on-primary: #171717; /* พื้นปุ่มสว่าง จึงใช้ตัวอักษรสีเข้ม */
+  --primary-hover: #d4d4d4;
+  --primary-soft: #333333;
+  --ring: #d4d4d4;
+  --destructive: #f87171;
+  --on-destructive: #450a0a;
+  --destructive-hover: #fca5a5;
+  --destructive-soft: #2a1414;
+  --on-destructive-soft: #fecaca;
 }
 
 /* ปิดชุดสีสำเร็จรูปของ Tailwind (เช่น bg-red-500) เพื่อบังคับให้ใช้ token ของเราเท่านั้น */
@@ -88,6 +90,7 @@
   --color-destructive-hover: var(--destructive-hover);
   --color-destructive-soft: var(--destructive-soft);
   --color-on-destructive-soft: var(--on-destructive-soft);
+  --color-scrim: var(--scrim);
 }
 
 /* variant "short:" สำหรับจอเตี้ย เช่น มือถือแนวนอน (สูงไม่เกิน 500px)

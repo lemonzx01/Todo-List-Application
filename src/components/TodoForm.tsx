@@ -61,7 +61,7 @@ export function TodoForm({ onAdd, disabled }: TodoFormProps) {
         <button
           type="submit"
           disabled={!canSubmit}
-          className="focus-ring inline-flex h-12 shrink-0 items-center justify-center gap-1.5 rounded-lg bg-primary px-4 font-semibold text-on-primary transition-colors enabled:hover:bg-primary-hover enabled:active:bg-primary-hover disabled:opacity-50 sm:px-5"
+          className="focus-ring inline-flex h-12 shrink-0 items-center justify-center gap-1.5 rounded-lg bg-primary px-4 font-semibold text-on-primary transition-colors enabled:hover:bg-primary-hover enabled:active:bg-primary-hover disabled:bg-muted disabled:text-muted-foreground disabled:inset-ring disabled:inset-ring-border sm:px-5"
         >
           {isSubmitting ? (
             // LoaderCircle คือไอคอน Loader2 (ชื่อใหม่ใน lucide) หมุนระหว่างรอ แต่ไม่หมุนถ้าผู้ใช้ตั้งค่าลดการเคลื่อนไหว

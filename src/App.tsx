@@ -7,6 +7,7 @@ import { SkeletonList } from './components/SkeletonList'
 import { TodoFilter } from './components/TodoFilter'
 import { TodoForm } from './components/TodoForm'
 import { TodoItem } from './components/TodoItem'
+import { ThemeToggle } from './components/ThemeToggle'
 import { TodoList } from './components/TodoList'
 import { useFilterFromUrl } from './hooks/useFilterFromUrl'
 import { useFocusAfterRender } from './hooks/useFocusAfterRender'
@@ -132,10 +133,11 @@ function App() {
             <span className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-primary text-on-primary">
               <ListChecks className="size-6" aria-hidden="true" />
             </span>
-            <div className="min-w-0">
+            <div className="min-w-0 flex-1">
               <h1 className="text-2xl font-bold sm:text-3xl short:text-2xl">รายการสิ่งที่ต้องทำ</h1>
               <p className="text-sm text-muted-foreground">จดสิ่งที่ต้องทำ แล้วติ๊กเมื่อทำเสร็จ</p>
             </div>
+            <ThemeToggle />
           </div>
 
           {/* ความคืบหน้า แสดงเมื่อโหลดรายการสำเร็จแล้วเท่านั้น */}
