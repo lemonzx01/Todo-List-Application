@@ -28,5 +28,6 @@ dist-ssr
 .env.local
 .env.*.local
 
-# เครื่องมือของ Claude Code / skill UI UX Pro Max (ไม่ใช่ส่วนของแอป)
+# เครื่องมือของ AI agent / skill UI UX Pro Max (ไม่ใช่ส่วนของแอป)
 .claude/
+.agents/
